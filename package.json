@@ -1,0 +1,19 @@
+{
+  "name": "dashbi-db-driver-mongodb",
+  "version": "0.1.0",
+  "description": "MongoDB driver for Dashbi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dashbi",
+    "dashbi-db-driver",
+    "mongodb"
+  ],
+  "author": "Marek Sierociński <mareksierocinski@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^3.3.1"
+  }
+}
