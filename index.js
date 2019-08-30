@@ -13,6 +13,8 @@ const DEFAULT_CONFIG = {
   dbName: 'dashbi'
 };
 
+const LIMIT_PER_SID = 1000000;
+
 
 /*
  * MongoDB Driver
@@ -97,10 +99,10 @@ class MongoDBDriver {
   fetch (sid) {
     return new Promise( (resolve, reject) => {
       this.ready.then( (collection) => {
-        collection.find({ sid }, {
-          limit: 100,
-          sort: { createdAt: -1 }
-        }).toArray( (err, docs) => {
+        collection.find({ sid })
+        .sort({ createdAt: -1 })
+        .limit(100)
+        .toArray( (err, docs) => {
           if (err) {
             reject(err);
           } else {
@@ -108,6 +110,26 @@ class MongoDBDriver {
           }
         });
       }).catch(reject);
+    });
+  }
+
+  /**
+   *  Clean up given Source
+   * @param {string} sid Source ID
+   */
+  cleanUp (sid) {
+    this.ready.then( (collection) => {
+      collection.find({ sid })
+      .sort({ createdAt: -1 })
+      .skip(LIMIT_PER_SID)
+      .toArray( (err, docs) => {
+        if (!err && docs.length) {
+          let sids = docs.map((doc) => doc.sid);
+          collection.deleteMany({
+            sid: { $in: sids }
+          });
+        }
+      });
     });
   }
 
