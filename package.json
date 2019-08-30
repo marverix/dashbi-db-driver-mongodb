@@ -1,6 +1,6 @@
 {
   "name": "dashbi-db-driver-mongodb",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MongoDB driver for Dashbi",
   "main": "index.js",
   "scripts": {
